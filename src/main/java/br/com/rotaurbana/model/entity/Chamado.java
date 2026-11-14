@@ -20,6 +20,7 @@ public class Chamado {
     public Chamado(ChamadoDTO chamadoDTO) {
         this.titulo = chamadoDTO.titulo();
         this.descricao = chamadoDTO.descricao();
+        this.prioridade = chamadoDTO.prioridade();
     }
 
     public Long getCodigo() {

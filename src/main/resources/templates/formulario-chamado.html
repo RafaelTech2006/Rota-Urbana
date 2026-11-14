@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Registo de Chamado</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <h1 class="mt-5">Registo de Chamado</h1>
+
+  <form th:action="${acao} == null ? '/chamado' : ${acao}" method="post">
+
+    <div class="mb-3">
+      <label for="titulo" class="form-label">Título</label>
+      <input th:value="${acao} != null ? ${chamado.titulo}" type="text" class="form-control" id="titulo" name="titulo" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="descricao" class="form-label">Descrição</label>
+      <textarea class="form-control" id="descricao" name="descricao" rows="3" th:text="${acao} != null ? ${chamado.descricao}"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="prioridade" class="form-label">Prioridade</label>
+      <select class="form-select" id="prioridade" name="prioridade" required>
+        <option value="">Selecione a prioridade...</option>
+        <option value="Baixa" th:selected="${acao != null and chamado.prioridade == 'Baixa'}">Baixa</option>
+        <option value="Média" th:selected="${acao != null and chamado.prioridade == 'Média'}">Média</option>
+        <option value="Alta" th:selected="${acao != null and chamado.prioridade == 'Alta'}">Alta</option>
+        <option value="Urgente" th:selected="${acao != null and chamado.prioridade == 'Urgente'}">Urgente</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="/chamado" class="btn btn-secondary">Cancelar</a>
+
+  </form>
+</div>
+</body>
+</html>

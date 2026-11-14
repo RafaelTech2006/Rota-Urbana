@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Registo de Ocorrência</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <h1 class="mt-5">Registo de Ocorrência</h1>
+  <form th:action="${acao} == null ? '/ocorrencia' : ${acao}" method="post">
+
+    <div class="mb-3">
+      <label for="titulo" class="form-label">Título</label>
+      <input th:value="${acao} != null ? ${ocorrencia.titulo}" type="text" class="form-control" id="titulo" name="titulo" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="descricao" class="form-label">Descrição</label>
+      <textarea class="form-control" id="descricao" name="descricao" rows="3" th:text="${acao} != null ? ${ocorrencia.descricao}"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <select class="form-select" id="status" name="status" required>
+        <option value="">Selecione o status...</option>
+        <option value="Pendente" th:selected="${acao != null and ocorrencia.status == 'Pendente'}">Pendente</option>
+        <option value="Em Andamento" th:selected="${acao != null and ocorrencia.status == 'Em Andamento'}">Em Andamento</option>
+        <option value="Resolvida" th:selected="${acao != null and ocorrencia.status == 'Resolvida'}">Resolvida</option>
+        <option value="Cancelada" th:selected="${acao != null and ocorrencia.status == 'Cancelada'}">Cancelada</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="/ocorrencia" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+</body>
+</html>

@@ -26,7 +26,7 @@ public class UsuarioController {
     @PostMapping
     public ModelAndView cadastrar(@Valid UsuarioDTO usuarioDTO, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("redirect:/rota");
+            return new ModelAndView("redirect:/usuario");
         }
         Usuario usuario = new Usuario(usuarioDTO);
         usuarioRepository.save(usuario);

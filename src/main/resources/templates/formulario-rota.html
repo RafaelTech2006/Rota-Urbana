@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Rota</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Registo de Rota</h1>
+    <form th:action="${acao} == null ? '/rota' : ${acao}" method="post">
+        <div class="mb-3">
+            <label for="origem" class="form-label">Origem</label>
+            <input th:value="${acao} != null ? ${rota.origem}" type="text" class="form-control" id="origem" name="origem" required>
+        </div>
+        <div class="mb-3">
+            <label for="destino" class="form-label">Destino</label>
+            <input th:value="${acao} != null ? ${rota.destino}" type="text" class="form-control" id="destino" name="destino" required>
+        </div>
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea class="form-control" id="descricao" name="descricao" rows="3" th:text="${acao} != null ? ${rota.descricao}"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="/rota" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+</body>
+</html>

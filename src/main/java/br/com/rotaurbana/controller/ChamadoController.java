@@ -19,7 +19,7 @@ public class ChamadoController {
     private ChamadoRepository chamadoRepository;
 
     @GetMapping("/novo")
-    public ModelAndView novo() {
+    public ModelAndView novo(ChamadoDTO chamadoDTO) {
         ModelAndView mv = new ModelAndView("formulario-chamado");
         return mv;
     }
@@ -27,12 +27,11 @@ public class ChamadoController {
     @PostMapping
     public ModelAndView cadastrar(@Valid ChamadoDTO chamadoDTO, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("redirect:/chamado");
+            return new ModelAndView("formulario-chamado");
         }
         Chamado chamado = new Chamado(chamadoDTO);
         chamadoRepository.save(chamado);
-        ModelAndView mv = new ModelAndView("redirect:/chamado");
-        return mv;
+        return new ModelAndView("redirect:/chamado");
     }
 
     @GetMapping
@@ -55,22 +54,20 @@ public class ChamadoController {
     @GetMapping("/excluir/{codigo}")
     public ModelAndView excluir(@PathVariable Long codigo) {
         chamadoRepository.deleteById(codigo);
-        ModelAndView mv = new ModelAndView("redirect:/chamado");
-        return mv;
+        return new ModelAndView("redirect:/chamado");
     }
 
     @PostMapping("/atualizar/{codigo}")
-    public  ModelAndView atulizar(@PathVariable Long codigo,
+    public ModelAndView atualizar(@PathVariable Long codigo,
                                   @Valid ChamadoDTO chamadoDTO, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("redirect:/chamado");
+            ModelAndView mv = new ModelAndView("formulario-chamado");
+            mv.addObject("acao", "/chamado/atualizar/" + codigo);
+            return mv;
         }
         Chamado chamado = new Chamado(chamadoDTO);
         chamado.setCodigo(codigo);
         chamadoRepository.save(chamado);
-        ModelAndView mv = new ModelAndView("redirect:/chamado");
-        return mv;
+        return new ModelAndView("redirect:/chamado");
     }
-
-
 }

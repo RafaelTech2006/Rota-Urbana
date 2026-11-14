@@ -19,7 +19,7 @@ public class OcorrenciaController {
     private OcorrenciaRepository ocorrenciaRepository;
 
     @GetMapping("/novo")
-    public ModelAndView novo() {
+    public ModelAndView novo(OcorrenciaDTO ocorrenciaDTO) {
         ModelAndView mv = new ModelAndView("formulario-ocorrencia");
         return mv;
     }
@@ -27,12 +27,11 @@ public class OcorrenciaController {
     @PostMapping
     public ModelAndView cadastrar(@Valid OcorrenciaDTO ocorrenciaDTO, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("redirect:/ocorrencia");
+            return new ModelAndView("formulario-ocorrencia");
         }
         Ocorrencia ocorrencia = new Ocorrencia(ocorrenciaDTO);
         ocorrenciaRepository.save(ocorrencia);
-        ModelAndView mv = new ModelAndView("redirect:/ocorrencia");
-        return mv;
+        return new ModelAndView("redirect:/ocorrencia");
     }
 
     @GetMapping
@@ -55,20 +54,20 @@ public class OcorrenciaController {
     @GetMapping("/excluir/{codigo}")
     public ModelAndView excluir(@PathVariable Long codigo){
         ocorrenciaRepository.deleteById(codigo);
-        ModelAndView mv = new ModelAndView("redirect:/ocorrencia");
-        return mv;
+        return new ModelAndView("redirect:/ocorrencia");
     }
 
     @PostMapping("/atualizar/{codigo}")
     public ModelAndView atualizar(@PathVariable Long codigo,
                                   @Valid OcorrenciaDTO ocorrenciaDTO, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("redirect:/ocorrencia");
+            ModelAndView mv = new ModelAndView("formulario-ocorrencia");
+            mv.addObject("acao", "/ocorrencia/atualizar/" + codigo);
+            return mv;
         }
         Ocorrencia ocorrencia = new Ocorrencia(ocorrenciaDTO);
         ocorrencia.setCodigo(codigo);
         ocorrenciaRepository.save(ocorrencia);
-        ModelAndView mv = new ModelAndView("redirect:/ocorrencia");
-        return mv;
+        return new ModelAndView("redirect:/ocorrencia");
     }
 }

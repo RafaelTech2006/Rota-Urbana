@@ -3,6 +3,8 @@ package br.com.rotaurbana.model.entity;
 import br.com.rotaurbana.model.dto.OcorrenciaDTO;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity(name = "Ocorrencia")
 @Table(name = "ocorrencia_ru")
 public class Ocorrencia {
